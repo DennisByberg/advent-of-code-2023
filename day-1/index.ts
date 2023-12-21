@@ -2,13 +2,8 @@ function getSumOfAllCalibrationValues(localTxtFile: string): Promise<number> {
   const fs = require("fs");
   let sum: number = 0;
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fs.readFile(localTxtFile, "utf8", (err: any, data: any) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-        return;
-      }
       const dataArray = data.split("\n");
 
       for (let i = 0; i < dataArray.length; i++) {
@@ -35,6 +30,6 @@ function getSumOfAllCalibrationValues(localTxtFile: string): Promise<number> {
   });
 }
 
-getSumOfAllCalibrationValues("./day-1/input.txt")
-  .then((sum) => console.log(sum))
-  .catch((err) => console.error(err));
+getSumOfAllCalibrationValues("./day-1/input.txt").then((sum) =>
+  console.log(sum)
+);
