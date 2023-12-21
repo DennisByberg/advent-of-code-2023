@@ -3,7 +3,8 @@ function getSumOfAllCalibrationValues(localTxtFile: string): Promise<number> {
   let sum: number = 0;
 
   return new Promise((resolve) => {
-    fs.readFile(localTxtFile, "utf8", (err: any, data: any) => {
+    fs.readFile(localTxtFile, "utf8", (error: any, data: any) => {
+      if (error) return;
       const dataArray = data.split("\n");
 
       for (let i = 0; i < dataArray.length; i++) {
@@ -13,14 +14,9 @@ function getSumOfAllCalibrationValues(localTxtFile: string): Promise<number> {
             numbers.push(parseInt(dataArray[i][j]));
           }
         }
-        let firstDigit = numbers[0];
-        let secondDigit: number;
-
-        if (numbers.length > 1) {
-          secondDigit = numbers[numbers.length - 1];
-        } else {
-          secondDigit = numbers[0];
-        }
+        const firstDigit = numbers[0];
+        const secondDigit =
+          numbers.length > 1 ? numbers[numbers.length - 1] : numbers[0];
 
         let twoDigitNumber = parseInt(`${firstDigit}${secondDigit}`);
         sum += twoDigitNumber;
@@ -30,6 +26,6 @@ function getSumOfAllCalibrationValues(localTxtFile: string): Promise<number> {
   });
 }
 
-getSumOfAllCalibrationValues("./day-1/input.txt").then((sum) =>
-  console.log(sum)
-);
+getSumOfAllCalibrationValues("./day-1/input.txt")
+  .then((sum) => console.log(sum))
+  .catch((err) => console.error(err));
